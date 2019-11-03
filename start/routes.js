@@ -28,3 +28,7 @@ Route.group(() => {
 Route.group(() => {
   Route.resource('questions', 'QuestionController').apiOnly();
 }).middleware('auth');
+
+Route.group(() => {
+  Route.resource('options', 'OptionController').apiOnly();
+}).middleware('auth');

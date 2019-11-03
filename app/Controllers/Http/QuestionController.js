@@ -20,7 +20,9 @@ class QuestionController {
    * @param {View} ctx.view
    */
   async index() {
-    const questions = await Question.all();
+    const questions = await Question.query()
+      .with('options')
+      .fetch();
 
     return questions;
   }
@@ -51,7 +53,10 @@ class QuestionController {
    * @param {View} ctx.view
    */
   async show({ params }) {
-    const question = await Question.findOrFail(params.id);
+    const question = await Question.query()
+      .where('id', params.id)
+      .with('options')
+      .fetch();
 
     return question;
   }
