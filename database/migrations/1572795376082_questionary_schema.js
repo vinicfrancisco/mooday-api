@@ -15,8 +15,8 @@ class QuestionarySchema extends Schema {
         .inTable('users')
         .onUpdate('CASCADE')
         .onDelete('CASCADE');
-      table.string('observation', 400);
-      table.string('name', 50);
+      table.string('description', 400);
+      table.string('title', 50);
       table.timestamps();
     });
   }

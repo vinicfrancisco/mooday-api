@@ -36,7 +36,7 @@ class QuestionaryController {
    * @param {Response} ctx.response
    */
   async store({ request, auth }) {
-    const data = request.only(['name', 'observation']);
+    const data = request.only(['title', 'description']);
 
     const questionary = await Questionary.create({ user_id: auth.user.id, ...data });
 
@@ -71,7 +71,7 @@ class QuestionaryController {
    */
   async update({ params, request }) {
     const questionary = await Questionary.findOrFail(params.id);
-    const data = request.only(['name', 'observation']);
+    const data = request.only(['title', 'description']);
 
     questionary.merge(data);
     questionary.save();
