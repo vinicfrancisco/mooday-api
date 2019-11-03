@@ -17,9 +17,9 @@
 const Route = use('Route');
 
 Route.post('/register', 'AuthController.register');
-Route.post('/authenticate', 'AuthController.authenticate');
-
-Route.get('/users', 'UserController.index');
+Route.post('/login', 'AuthController.authenticate');
+Route.get('/me', 'UserController.show').middleware('auth');
+Route.get('/users', 'UserController.index').middleware('auth');
 
 Route.group(() => {
   Route.resource('questionaries', 'QuestionaryController').apiOnly();

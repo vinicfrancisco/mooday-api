@@ -8,6 +8,12 @@ class UserController {
 
     return users;
   }
+
+  async show({ auth }) {
+    const user = await User.findOrFail(auth.user.id);
+
+    return user;
+  }
 }
 
 module.exports = UserController;
