@@ -19,7 +19,7 @@ class QuestionController {
    * @param {Response} ctx.response
    * @param {View} ctx.view
    */
-  async index({ auth }) {
+  async index({ request }) {
     const questions = await Question.query()
       .with('options')
       .fetch();

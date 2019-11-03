@@ -19,8 +19,10 @@ class QuestionaryController {
    * @param {Response} ctx.response
    * @param {View} ctx.view
    */
-  async index() {
-    const questionaries = await Questionary.all();
+  async index({ request }) {
+    const { page, per } = request.get();
+
+    const questionaries = await Questionary.query().paginate(!!page ? page : 1, !!per ? per : 25);
 
     return questionaries;
   }

@@ -3,8 +3,10 @@
 const User = use('App/Models/User');
 
 class UserController {
-  async index() {
-    const users = await User.all();
+  async index({ request }) {
+    const { page, per } = request.get();
+
+    const users = await User.query().paginate(!!page ? page : 1, !!per ? per : 25);
 
     return users;
   }
