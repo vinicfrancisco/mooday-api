@@ -20,3 +20,7 @@ Route.post('/register', 'AuthController.register');
 Route.post('/authenticate', 'AuthController.authenticate');
 
 Route.get('/users', 'UserController.index');
+
+Route.group(() => {
+  Route.resource('questionaries', 'QuestionaryController').apiOnly();
+}).middleware('auth');
