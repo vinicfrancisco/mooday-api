@@ -19,9 +19,9 @@ class QuestionController {
    * @param {Response} ctx.response
    * @param {View} ctx.view
    */
-  async index({ request }) {
+  async index() {
     const questions = await Question.query()
-      .with('options')
+      .with('questionary')
       .fetch();
 
     return questions;
@@ -55,6 +55,7 @@ class QuestionController {
   async show({ params }) {
     const question = await Question.query()
       .where('id', params.id)
+      .with('questionary')
       .with('options')
       .fetch();
 
