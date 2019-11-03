@@ -24,3 +24,7 @@ Route.get('/users', 'UserController.index');
 Route.group(() => {
   Route.resource('questionaries', 'QuestionaryController').apiOnly();
 }).middleware('auth');
+
+Route.group(() => {
+  Route.resource('questions', 'QuestionController').apiOnly();
+}).middleware('auth');

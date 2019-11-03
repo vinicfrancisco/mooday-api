@@ -20,7 +20,9 @@ class QuestionaryController {
    * @param {View} ctx.view
    */
   async index() {
-    const questionaries = await Questionary.all();
+    const questionaries = await Questionary.query()
+      .with('questions')
+      .fetch();
 
     return questionaries;
   }
@@ -52,8 +54,9 @@ class QuestionaryController {
    */
   async show({ params }) {
     const questionary = await Questionary.findOrFail(params.id);
+    const questionaryQuestions = await questionary.questions().fetch();
 
-    return questionary;
+    return questionaryQuestions;
   }
 
   /**
