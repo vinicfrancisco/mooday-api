@@ -56,7 +56,6 @@ class QuestionController {
     const question = await Question.query()
       .where('id', params.id)
       .with('questionary')
-      .with('options')
       .fetch();
 
     return question;
