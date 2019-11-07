@@ -7,10 +7,6 @@ class Option extends Model {
   question() {
     return this.belongsTo('App/Models/Question');
   }
-
-  user() {
-    return this.belongsToMany('App/Models/User').withTimestamps();
-  }
 }
 
 module.exports = Option;
