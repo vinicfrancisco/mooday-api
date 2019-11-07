@@ -20,12 +20,10 @@ class QuestionaryController {
    * @param {View} ctx.view
    */
   async index({ request, auth }) {
-    const user_id = auth.user.id;
-
     const { page, per } = request.get();
 
     const questionaries = await Questionary.query()
-      .where('user_id', user_id)
+      .where('user_id', auth.user.id)
       .paginate(!!page ? page : 1, !!per ? per : 25);
 
     return questionaries;
