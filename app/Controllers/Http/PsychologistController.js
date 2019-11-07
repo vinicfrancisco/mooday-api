@@ -9,17 +9,6 @@
  */
 class PsychologistController {
   /**
-   * Show a list of all psychologists.
-   * GET psychologists
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   * @param {View} ctx.view
-   */
-  async index({ request, auth }) {}
-
-  /**
    * Create/save a new psychologist.
    * POST psychologists
    *
@@ -28,27 +17,6 @@ class PsychologistController {
    * @param {Response} ctx.response
    */
   async store({ request, response }) {}
-
-  /**
-   * Display a single psychologist.
-   * GET psychologists/:id
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   * @param {View} ctx.view
-   */
-  async show({ params, request, response, view }) {}
-
-  /**
-   * Update psychologist details.
-   * PUT or PATCH psychologists/:id
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   */
-  async update({ params, request, response }) {}
 
   /**
    * Delete a psychologist with id.

@@ -41,16 +41,6 @@ class PacientController {
   async show({ params, request, response, view }) {}
 
   /**
-   * Update pacient details.
-   * PUT or PATCH pacients/:id
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   */
-  async update({ params, request, response }) {}
-
-  /**
    * Delete a pacient with id.
    * DELETE pacients/:id
    *
