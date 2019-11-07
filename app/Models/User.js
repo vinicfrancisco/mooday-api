@@ -34,8 +34,17 @@ class User extends Model {
   tokens() {
     return this.hasMany('App/Models/Token');
   }
+
   questionaries() {
     return this.hasMany('App/Models/Questionary');
+  }
+
+  psychologist() {
+    return this.hasOne('App/Models/Psychologist');
+  }
+
+  answers() {
+    return this.hasMany('App/Models/Answer');
   }
 }
 
