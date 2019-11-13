@@ -1,6 +1,6 @@
-'use strict';
+"use strict";
 
-const Questionary = use('App/Models/Questionary');
+const Questionary = use("App/Models/Questionary");
 
 /** @typedef {import('@adonisjs/framework/src/Request')} Request */
 /** @typedef {import('@adonisjs/framework/src/Response')} Response */
@@ -23,7 +23,7 @@ class QuestionaryController {
     const { page, per } = request.get();
 
     const questionaries = await Questionary.query()
-      .where('user_id', auth.user.id)
+      .where("user_id", auth.user.id)
       .paginate(!!page ? page : 1, !!per ? per : 25);
 
     return questionaries;
@@ -38,9 +38,12 @@ class QuestionaryController {
    * @param {Response} ctx.response
    */
   async store({ request, auth }) {
-    const data = request.only(['title', 'description']);
+    const data = request.only(["title", "description"]);
 
-    const questionary = await Questionary.create({ user_id: auth.user.id, ...data });
+    const questionary = await Questionary.create({
+      user_id: auth.user.id,
+      ...data
+    });
 
     return questionary;
   }
@@ -56,8 +59,8 @@ class QuestionaryController {
    */
   async show({ params }) {
     const questionary = await Questionary.query()
-      .where('id', params.id)
-      .with('questions')
+      .where("id", params.id)
+      .with("questions")
       .fetch();
 
     return questionary;
@@ -73,7 +76,7 @@ class QuestionaryController {
    */
   async update({ params, request }) {
     const questionary = await Questionary.findOrFail(params.id);
-    const data = request.only(['title', 'description']);
+    const data = request.only(["title", "description"]);
 
     questionary.merge(data);
     questionary.save();

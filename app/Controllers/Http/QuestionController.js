@@ -1,6 +1,6 @@
-'use strict';
+"use strict";
 
-const Question = use('App/Models/Question');
+const Question = use("App/Models/Question");
 
 /** @typedef {import('@adonisjs/framework/src/Request')} Request */
 /** @typedef {import('@adonisjs/framework/src/Response')} Response */
@@ -21,7 +21,7 @@ class QuestionController {
    */
   async index() {
     const questions = await Question.query()
-      .with('questionary')
+      .with("questionary")
       .fetch();
 
     return questions;
@@ -36,7 +36,7 @@ class QuestionController {
    * @param {Response} ctx.response
    */
   async store({ request }) {
-    const data = request.only(['title', 'questionary_id']);
+    const data = request.only(["title", "questionary_id"]);
 
     const question = await Question.create(data);
 
@@ -54,9 +54,9 @@ class QuestionController {
    */
   async show({ params }) {
     const question = await Question.query()
-      .where('id', params.id)
-      .with('questionary')
-      .with('options')
+      .where("id", params.id)
+      .with("questionary")
+      .with("options")
       .fetch();
 
     return question;
@@ -72,7 +72,7 @@ class QuestionController {
    */
   async update({ params, request }) {
     const question = await Question.findOrFail(params.id);
-    const data = request.only(['title', 'questionary_id']);
+    const data = request.only(["title", "questionary_id"]);
 
     question.merge(data);
     question.save();

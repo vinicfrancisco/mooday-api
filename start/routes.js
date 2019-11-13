@@ -27,6 +27,10 @@ Route.delete("/psychologist/:id", "PsychologistController.destroy").middleware(
 );
 
 Route.group(() => {
+  Route.resource("pacients", "PacientController").apiOnly();
+}).middleware("auth");
+
+Route.group(() => {
   Route.resource("questionaries", "QuestionaryController").apiOnly();
 }).middleware("auth");
 

@@ -2,6 +2,7 @@
 
 const Pacient = use("App/Models/Pacient");
 const Psychologist = use("App/Models/Psychologist");
+const User = use("App/Models/User");
 
 /** @typedef {import('@adonisjs/framework/src/Request')} Request */
 /** @typedef {import('@adonisjs/framework/src/Response')} Response */
@@ -21,15 +22,11 @@ class PacientController {
    * @param {View} ctx.view
    */
   async index({ auth }) {
-    const psychologist = await Psychologist.query().where(
-      "user_id",
-      auth.user.id
-    );
+    const psychologist = await Psychologist.findBy("user_id", auth.user.id);
 
-    const pacients = await Pacient.query().where(
-      "psychologist_id",
-      psychologist.id
-    );
+    const pacients = await Pacient.query()
+      .where("psychologist_id", psychologist.id)
+      .fetch();
 
     return pacients;
   }
@@ -42,7 +39,19 @@ class PacientController {
    * @param {Request} ctx.request
    * @param {Response} ctx.response
    */
-  async store({ request, response }) {}
+  async store({ request, auth }) {
+    const data = request.only("email");
+
+    const user = await User.findBy("email", data.email);
+    const psychologist = await Psychologist.findBy("user_id", auth.user.id);
+
+    const pacient = await Pacient.create({
+      user_id: user.id,
+      psychologist_id: psychologist.id
+    });
+
+    return pacient;
+  }
 
   /**
    * Display a single pacient.
@@ -53,7 +62,11 @@ class PacientController {
    * @param {Response} ctx.response
    * @param {View} ctx.view
    */
-  async show({ params, request, response, view }) {}
+  async show({ params }) {
+    const pacient = await Pacient.findOrFail(params.id);
+
+    return pacient;
+  }
 
   /**
    * Delete a pacient with id.
@@ -63,7 +76,16 @@ class PacientController {
    * @param {Request} ctx.request
    * @param {Response} ctx.response
    */
-  async destroy({ params, request, response }) {}
+  async destroy({ params, response, auth }) {
+    const pacient = await Pacient.findOrFail(params.id);
+    const psychologist = await Psychologist.findBy("user_id", auth.user.id);
+
+    if (pacient.psychologist_id !== psychologist.id) {
+      return response.status(401);
+    }
+
+    await pacient.delete();
+  }
 }
 
 module.exports = PacientController;
