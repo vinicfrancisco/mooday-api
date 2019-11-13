@@ -1,4 +1,4 @@
-'use strict';
+"use strict";
 
 /*
 |--------------------------------------------------------------------------
@@ -14,21 +14,26 @@
 */
 
 /** @type {typeof import('@adonisjs/framework/src/Route/Manager')} */
-const Route = use('Route');
+const Route = use("Route");
 
-Route.post('/register', 'AuthController.register');
-Route.post('/login', 'AuthController.authenticate');
+Route.post("/register", "AuthController.register");
+Route.post("/login", "AuthController.authenticate");
 
-Route.get('/me', 'UserController.show').middleware('auth');
+Route.get("/me", "UserController.show").middleware("auth");
 
-Route.group(() => {
-  Route.resource('questionaries', 'QuestionaryController').apiOnly();
-}).middleware('auth');
-
-Route.group(() => {
-  Route.resource('questions', 'QuestionController').apiOnly();
-}).middleware('auth');
+Route.post("/psychologist", "PsychologistController.store").middleware("auth");
+Route.delete("/psychologist/:id", "PsychologistController.destroy").middleware(
+  "auth"
+);
 
 Route.group(() => {
-  Route.resource('options', 'OptionController').apiOnly();
-}).middleware('auth');
+  Route.resource("questionaries", "QuestionaryController").apiOnly();
+}).middleware("auth");
+
+Route.group(() => {
+  Route.resource("questions", "QuestionController").apiOnly();
+}).middleware("auth");
+
+Route.group(() => {
+  Route.resource("options", "OptionController").apiOnly();
+}).middleware("auth");

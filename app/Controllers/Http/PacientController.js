@@ -1,4 +1,7 @@
-'use strict';
+"use strict";
+
+const Pacient = use("App/Models/Pacient");
+const Psychologist = use("App/Models/Psychologist");
 
 /** @typedef {import('@adonisjs/framework/src/Request')} Request */
 /** @typedef {import('@adonisjs/framework/src/Response')} Response */
@@ -17,7 +20,19 @@ class PacientController {
    * @param {Response} ctx.response
    * @param {View} ctx.view
    */
-  async index({ request, response, view }) {}
+  async index({ auth }) {
+    const psychologist = await Psychologist.query().where(
+      "user_id",
+      auth.user.id
+    );
+
+    const pacients = await Pacient.query().where(
+      "psychologist_id",
+      psychologist.id
+    );
+
+    return pacients;
+  }
 
   /**
    * Create/save a new pacient.

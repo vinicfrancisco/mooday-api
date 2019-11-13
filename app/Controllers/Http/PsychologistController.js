@@ -1,4 +1,7 @@
-'use strict';
+"use strict";
+
+const User = use("App/Models/User");
+const Psychologist = use("App/Models/Psychologist");
 
 /** @typedef {import('@adonisjs/framework/src/Request')} Request */
 /** @typedef {import('@adonisjs/framework/src/Response')} Response */
@@ -16,7 +19,13 @@ class PsychologistController {
    * @param {Request} ctx.request
    * @param {Response} ctx.response
    */
-  async store({ request, response }) {}
+  async store({ auth }) {
+    const user = await User.findOrFail(auth.user.id);
+
+    const psychologist = await Psychologist.create({ user_id: user.id });
+
+    return psychologist;
+  }
 
   /**
    * Delete a psychologist with id.
@@ -26,7 +35,11 @@ class PsychologistController {
    * @param {Request} ctx.request
    * @param {Response} ctx.response
    */
-  async destroy({ params, request, response }) {}
+  async destroy({ params }) {
+    const psychologist = await Psychologist.findOrFail(params.id);
+
+    await psychologist.delete();
+  }
 }
 
 module.exports = PsychologistController;
