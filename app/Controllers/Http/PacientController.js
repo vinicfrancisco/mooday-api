@@ -26,6 +26,7 @@ class PacientController {
 
     const pacients = await Pacient.query()
       .where("psychologist_id", psychologist.id)
+      .with("user")
       .fetch();
 
     return pacients;
@@ -63,7 +64,10 @@ class PacientController {
    * @param {View} ctx.view
    */
   async show({ params }) {
-    const pacient = await Pacient.findOrFail(params.id);
+    const pacient = await Pacient.query()
+      .where("id", params.id)
+      .with("user")
+      .fetch();
 
     return pacient;
   }
