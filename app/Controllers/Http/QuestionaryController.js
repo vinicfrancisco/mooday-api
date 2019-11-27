@@ -60,7 +60,7 @@ class QuestionaryController {
   async show({ params }) {
     const questionary = await Questionary.query()
       .where("id", params.id)
-      .with("questions")
+      .with("questions.options")
       .fetch();
 
     return questionary;
