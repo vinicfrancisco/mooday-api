@@ -19,10 +19,17 @@ class QuestionController {
    * @param {Response} ctx.response
    * @param {View} ctx.view
    */
-  async index() {
-    const questions = await Question.query()
-      .with("questionary")
-      .fetch();
+  async index({ request }) {
+    let questions = [];
+    const { questionary_id } = request.get();
+
+    if (questionary_id === undefined) {
+      questions = Question.all();
+    } else {
+      questions = Question.query()
+        .where({ questionary_id })
+        .fetch();
+    }
 
     return questions;
   }
